@@ -5,11 +5,11 @@ import { Utils } from "./utils.class";
 @Component({
 	selector: "app-root",
 	templateUrl: "./app.component.html",
-	styleUrls: ["./app.component.scss"]
+	styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements OnInit {
-	public startWith: string = "r";
-	public length: number | null = 8;
+	public startWith: string = "";
+	public length: number | null = null;
 	public result: string[] = [];
 	public toExclude: string[] = [];
 	public excluded: string[] = [];
