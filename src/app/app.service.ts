@@ -7,6 +7,6 @@ export class AppService {
 	constructor(private http: HttpClient) {}
 
 	public getWords(): Observable<string[]> {
-		return this.http.get<string[]>("/assets/words.json");
+		return this.http.get<string[]>("/assets/words-fr.json");
 	}
 }
