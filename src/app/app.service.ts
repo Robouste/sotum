@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
 export class AppService {
 	constructor(private http: HttpClient) {}
 
-	public getWords(): Observable<string[]> {
-		return this.http.get<string[]>("/assets/words-fr.json");
+	public getWords(lang: string): Observable<string[]> {
+		return this.http.get<string[]>(`/assets/words-${lang}.json`);
 	}
 }

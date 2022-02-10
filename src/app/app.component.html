@@ -1,81 +1,49 @@
 <div class="content">
 	<div class="side-panel">
-		<div class="filter-group">
-			<div class="filter">
-				<mat-label>Start with</mat-label>
-				<mat-button-toggle-group [(ngModel)]="startWith">
-					<mat-button-toggle value="a">a</mat-button-toggle>
-					<mat-button-toggle value="b">b</mat-button-toggle>
-					<mat-button-toggle value="c">c</mat-button-toggle>
-					<mat-button-toggle value="d">d</mat-button-toggle>
-					<mat-button-toggle value="e">e</mat-button-toggle>
-					<mat-button-toggle value="f">f</mat-button-toggle>
-					<mat-button-toggle value="g">g</mat-button-toggle>
-					<mat-button-toggle value="h">h</mat-button-toggle>
-					<mat-button-toggle value="i">i</mat-button-toggle>
-					<mat-button-toggle value="j">j</mat-button-toggle>
-					<mat-button-toggle value="k">k</mat-button-toggle>
-					<mat-button-toggle value="l">l</mat-button-toggle>
-					<mat-button-toggle value="m">m</mat-button-toggle>
-					<mat-button-toggle value="n">n</mat-button-toggle>
-					<mat-button-toggle value="o">o</mat-button-toggle>
-					<mat-button-toggle value="p">p</mat-button-toggle>
-					<mat-button-toggle value="q">q</mat-button-toggle>
-					<mat-button-toggle value="r">r</mat-button-toggle>
-					<mat-button-toggle value="s">s</mat-button-toggle>
-					<mat-button-toggle value="t">t</mat-button-toggle>
-					<mat-button-toggle value="u">u</mat-button-toggle>
-					<mat-button-toggle value="v">v</mat-button-toggle>
-					<mat-button-toggle value="w">w</mat-button-toggle>
-					<mat-button-toggle value="x">x</mat-button-toggle>
-					<mat-button-toggle value="y">y</mat-button-toggle>
-					<mat-button-toggle value="z">z</mat-button-toggle>
-				</mat-button-toggle-group>
+		<form class="form-filter" [formGroup]="form">
+			<div class="language">
+				<mat-form-field>
+					<mat-select formControlName="language">
+						<mat-option value="fr">FR</mat-option>
+						<mat-option value="fr-5">FR (Wordle)</mat-option>
+						<mat-option value="en">EN</mat-option>
+					</mat-select>
+				</mat-form-field>
 			</div>
-		</div>
+			<div class="filter-group">
+				<div class="filter">
+					<mat-label>Start with</mat-label>
+					<mat-button-toggle-group formControlName="startWith">
+						<mat-button-toggle *ngFor="let letter of alphabet" [value]="letter">{{ letter }}</mat-button-toggle>
+					</mat-button-toggle-group>
+				</div>
+			</div>
 
-		<div class="filter">
-			<mat-form-field>
-				<mat-label>Length</mat-label>
-				<input matInput type="number" [(ngModel)]="length" />
-			</mat-form-field>
+			<div class="filter form-last-line">
+				<mat-form-field>
+					<mat-label>Length</mat-label>
+					<input matInput type="number" formControlName="length" />
+				</mat-form-field>
 
-			<button mat-stroked-button color="primary" (click)="filter()">Filter</button>
-
-			<!-- {{ result.length }} -->
-		</div>
+				<button mat-stroked-button color="primary" class="filter-btn" type="submit" [disabled]="form.invalid" (click)="filter()">Filter</button>
+				<button mat-stroked-button color="accent" (click)="reset()">
+					<mat-icon>replay</mat-icon>
+				</button>
+			</div>
+		</form>
 
 		<div class="filter-group" *ngIf="result.length">
 			<div class="filter">
 				<mat-label>Include</mat-label>
 				<div class="filter-buttons">
 					<mat-button-toggle-group [(ngModel)]="toInclude" multiple>
-						<mat-button-toggle value="a" [disabled]="included.includes('a')"> a </mat-button-toggle>
-						<mat-button-toggle value="b" [disabled]="included.includes('b')"> b </mat-button-toggle>
-						<mat-button-toggle value="c" [disabled]="included.includes('c')"> c </mat-button-toggle>
-						<mat-button-toggle value="d" [disabled]="included.includes('d')"> d </mat-button-toggle>
-						<mat-button-toggle value="e" [disabled]="included.includes('e')"> e </mat-button-toggle>
-						<mat-button-toggle value="f" [disabled]="included.includes('f')"> f </mat-button-toggle>
-						<mat-button-toggle value="g" [disabled]="included.includes('g')"> g </mat-button-toggle>
-						<mat-button-toggle value="h" [disabled]="included.includes('h')"> h </mat-button-toggle>
-						<mat-button-toggle value="i" [disabled]="included.includes('i')"> i </mat-button-toggle>
-						<mat-button-toggle value="j" [disabled]="included.includes('j')"> j </mat-button-toggle>
-						<mat-button-toggle value="k" [disabled]="included.includes('k')"> k </mat-button-toggle>
-						<mat-button-toggle value="l" [disabled]="included.includes('l')"> l </mat-button-toggle>
-						<mat-button-toggle value="m" [disabled]="included.includes('m')"> m </mat-button-toggle>
-						<mat-button-toggle value="n" [disabled]="included.includes('n')"> n </mat-button-toggle>
-						<mat-button-toggle value="o" [disabled]="included.includes('o')"> o </mat-button-toggle>
-						<mat-button-toggle value="p" [disabled]="included.includes('p')"> p </mat-button-toggle>
-						<mat-button-toggle value="q" [disabled]="included.includes('q')"> q </mat-button-toggle>
-						<mat-button-toggle value="r" [disabled]="included.includes('r')"> r </mat-button-toggle>
-						<mat-button-toggle value="s" [disabled]="included.includes('s')"> s </mat-button-toggle>
-						<mat-button-toggle value="t" [disabled]="included.includes('t')"> t </mat-button-toggle>
-						<mat-button-toggle value="u" [disabled]="included.includes('u')"> u </mat-button-toggle>
-						<mat-button-toggle value="v" [disabled]="included.includes('v')"> v </mat-button-toggle>
-						<mat-button-toggle value="w" [disabled]="included.includes('w')"> w </mat-button-toggle>
-						<mat-button-toggle value="x" [disabled]="included.includes('x')"> x </mat-button-toggle>
-						<mat-button-toggle value="y" [disabled]="included.includes('y')"> y </mat-button-toggle>
-						<mat-button-toggle value="z" [disabled]="included.includes('z')"> z </mat-button-toggle>
+						<mat-button-toggle
+							*ngFor="let letter of alphabet"
+							[value]="letter"
+							[disabled]="included.includes(letter) || excluded.includes(letter) || startWith === letter"
+						>
+							{{ letter }}
+						</mat-button-toggle>
 					</mat-button-toggle-group>
 
 					<button mat-icon-button color="primary" [disabled]="!toInclude.length" (click)="addToIncluded()">
@@ -97,32 +65,13 @@
 				<mat-label>Exclude</mat-label>
 				<div class="filter-buttons">
 					<mat-button-toggle-group [(ngModel)]="toExclude" multiple>
-						<mat-button-toggle value="a" [disabled]="excluded.includes('a')"> a </mat-button-toggle>
-						<mat-button-toggle value="b" [disabled]="excluded.includes('b')"> b </mat-button-toggle>
-						<mat-button-toggle value="c" [disabled]="excluded.includes('c')"> c </mat-button-toggle>
-						<mat-button-toggle value="d" [disabled]="excluded.includes('d')"> d </mat-button-toggle>
-						<mat-button-toggle value="e" [disabled]="excluded.includes('e')"> e </mat-button-toggle>
-						<mat-button-toggle value="f" [disabled]="excluded.includes('f')"> f </mat-button-toggle>
-						<mat-button-toggle value="g" [disabled]="excluded.includes('g')"> g </mat-button-toggle>
-						<mat-button-toggle value="h" [disabled]="excluded.includes('h')"> h </mat-button-toggle>
-						<mat-button-toggle value="i" [disabled]="excluded.includes('i')"> i </mat-button-toggle>
-						<mat-button-toggle value="j" [disabled]="excluded.includes('j')"> j </mat-button-toggle>
-						<mat-button-toggle value="k" [disabled]="excluded.includes('k')"> k </mat-button-toggle>
-						<mat-button-toggle value="l" [disabled]="excluded.includes('l')"> l </mat-button-toggle>
-						<mat-button-toggle value="m" [disabled]="excluded.includes('m')"> m </mat-button-toggle>
-						<mat-button-toggle value="n" [disabled]="excluded.includes('n')"> n </mat-button-toggle>
-						<mat-button-toggle value="o" [disabled]="excluded.includes('o')"> o </mat-button-toggle>
-						<mat-button-toggle value="p" [disabled]="excluded.includes('p')"> p </mat-button-toggle>
-						<mat-button-toggle value="q" [disabled]="excluded.includes('q')"> q </mat-button-toggle>
-						<mat-button-toggle value="r" [disabled]="excluded.includes('r')"> r </mat-button-toggle>
-						<mat-button-toggle value="s" [disabled]="excluded.includes('s')"> s </mat-button-toggle>
-						<mat-button-toggle value="t" [disabled]="excluded.includes('t')"> t </mat-button-toggle>
-						<mat-button-toggle value="u" [disabled]="excluded.includes('u')"> u </mat-button-toggle>
-						<mat-button-toggle value="v" [disabled]="excluded.includes('v')"> v </mat-button-toggle>
-						<mat-button-toggle value="w" [disabled]="excluded.includes('w')"> w </mat-button-toggle>
-						<mat-button-toggle value="x" [disabled]="excluded.includes('x')"> x </mat-button-toggle>
-						<mat-button-toggle value="y" [disabled]="excluded.includes('y')"> y </mat-button-toggle>
-						<mat-button-toggle value="z" [disabled]="excluded.includes('z')"> z </mat-button-toggle>
+						<mat-button-toggle
+							*ngFor="let letter of alphabet"
+							[value]="letter"
+							[disabled]="included.includes(letter) || excluded.includes(letter) || startWith === letter"
+						>
+							{{ letter }}
+						</mat-button-toggle>
 					</mat-button-toggle-group>
 
 					<button mat-icon-button color="primary" [disabled]="!toExclude.length" (click)="addToExcluded()">
@@ -141,6 +90,16 @@
 				</div>
 			</div>
 		</div>
+		<ng-container *ngIf="result.length">
+			<form class="word-builder" [formGroup]="wordBuilderForm">
+				<ng-container *ngFor="let i of headerCount; let index = index">
+					<mat-form-field>
+						<mat-label>{{ index + 1 }}</mat-label>
+						<input [formControlName]="index" matInput />
+					</mat-form-field>
+				</ng-container>
+			</form>
+		</ng-container>
 	</div>
 	<div class="result">
 		<mat-card *ngIf="result.length">
@@ -150,16 +109,18 @@
 				</span>
 			</div>
 			<mat-list dense>
-				<ng-container *ngFor="let word of result | exclude: excluded | include: included; let last = last">
-					<mat-list-item>
-						<div class="item">
-							<div class="char" *ngFor="let char of word.split('')">
-								{{ char }}
+				<cdk-virtual-scroll-viewport itemSize="40">
+					<ng-container *cdkVirtualFor="let word of result | exclude: excluded | include: included; let last = last">
+						<mat-list-item>
+							<div class="item">
+								<div class="char" *ngFor="let char of word.split('')">
+									{{ char }}
+								</div>
 							</div>
-						</div>
-					</mat-list-item>
-					<!-- <mat-divider *ngIf="!last"></mat-divider> -->
-				</ng-container>
+						</mat-list-item>
+						<!-- <mat-divider *ngIf="!last"></mat-divider> -->
+					</ng-container>
+				</cdk-virtual-scroll-viewport>
 			</mat-list>
 		</mat-card>
 	</div>
